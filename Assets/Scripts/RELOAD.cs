@@ -7,7 +7,7 @@ public class RELOAD : MonoBehaviour
 
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // loads current scene
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // carregando cena destinta 
     }
 
 }

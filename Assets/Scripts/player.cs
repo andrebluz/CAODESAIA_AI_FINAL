@@ -4,48 +4,48 @@ using UnityEngine;
 
 public class player : MonoBehaviour
 {
-    private CharacterController controller;
-    private Animator anima;
+    private CharacterController controller; //  var para declarar character controle
+    private Animator anima // var da animação
 
     [Header("Config")]
-    public int HP;
+    public int HP; // var de vida
 
-    public float pVel = 3f;
+    public float pVel = 3f; // var de velocidade
 
-    private Vector3 direction;
-    private bool isWalking;
+    private Vector3 direction; // var de vector de destino 
+    private bool isWalking;// var para disparar animação
 
     //Input
-    private float hor;
-    private float ver;
+    private float hor; //var para denominar eixo horizontal
+    private float ver;// var para demnominar eixo vertical
 
     [Header("Attack Config")]
-    public ParticleSystem fxAttack;
-    public Transform hitBox;
+    public ParticleSystem fxAttack; // pegando efeito de particula 
+    public Transform hitBox; // pegando colisor  para o ataque 
     [Range(0.2f, 2f)]
-    public float hitRange = 0.5f;
-    public LayerMask hitMask;
-    private bool isAttack;
-    public Collider[] hitInfo;
-    public int amountDmg;
+    public float hitRange = 0.5f; // tamanho do ataque 
+    public LayerMask hitMask;// quais layer vai indetificar o ataque 
+    private bool isAttack; // se o ataque 
+    public Collider[] hitInfo; // pega os colisores que entra em colisão com hitbox
+    public int amountDmg;// valor do dano 
 
     private void Start()
     {
-        controller = GetComponent<CharacterController>();
-        anima = GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();// pegando character cotroler
+        anima = GetComponent<Animator>();// pegando animator
     }
 
     private void Update()
     {
-        Inputs();
-        PlayerMoves();
+        Inputs(); // imputs
+        PlayerMoves();// moviemnto do player
 
-        UpdateAnimator();
+        UpdateAnimator();// animações
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.gameObject.tag == "TakeDamage")
+        if(other.gameObject.tag == "TakeDamage")// se colidir a tag dispara dano 
         {
             GetHit(1);
         }
@@ -55,36 +55,36 @@ public class player : MonoBehaviour
 
     void Inputs()
     {
-        hor = Input.GetAxis("Horizontal");
-        ver = Input.GetAxis("Vertical");
+        hor = Input.GetAxis("Horizontal"); // pegando eixo horizontal
+        ver = Input.GetAxis("Vertical");// pegando eixo vertical
 
-        if (Input.GetButtonDown("Fire1") && !isAttack)
+        if (Input.GetButtonDown("Fire1") && !isAttack)// diparando ataque se for verdadeiro
         {
-            Attack();
+            Attack(); // metodo ataque
         }
     }
 
-    void Attack()
+    void Attack() //metodo de ataque diparado ele com a animação  e efeito 
     {
-         isAttack = true;
+         isAttack = true; 
          anima.SetTrigger("Attack");
          fxAttack.Emit(1);
 
-        hitInfo = Physics.OverlapSphere(hitBox.position, hitRange, hitMask);
+        hitInfo = Physics.OverlapSphere(hitBox.position, hitRange, hitMask); //pegando uma esfera de colisão para hitbox
              foreach(Collider c in hitInfo)
              {
-                  c.gameObject.SendMessage("GetHit", amountDmg);
+                  c.gameObject.SendMessage("GetHit", amountDmg);//mando messagen de dano e o valor para objeto atigindo 
             print(c);
              }
 
 
         }
 
-    void PlayerMoves()
+    void PlayerMoves() // movimentos
     {
         direction = new Vector3(hor, 0, ver).normalized;
 
-        if (direction.magnitude > 0.1f)
+        if (direction.magnitude > 0.1f) // se  o player se mover mais que valor x dispara animação e de move tendo rotção
         {
             //float pAngle = Mathf.Atan2(direction.x * 2, direction.z * 2) * Mathf.Rad2Deg;
             //transform.rotation = Quaternion.Euler(0, pAngle, 0);
@@ -99,22 +99,23 @@ public class player : MonoBehaviour
             isWalking = false;
         }
 
-        controller.Move(direction * pVel * Time.deltaTime);
+        controller.Move(direction * pVel * Time.deltaTime); // dando velocidade ao movimento 
     }
 
     void UpdateAnimator()
     {
-        anima.SetBool("isWalking", isWalking);
+        anima.SetBool("isWalking", isWalking); // diparando animação de  andar 
     }
 
    void AttackIsDone()
     {
-        isAttack = false;
+        isAttack = false; 
     }
-
+   // metodo que recebe o valor da vida 
     void GetHit(int amount)
     {
         HP -= amount;
+        // receber dano e a vida inda for maior que 0 dispara animação de dano se não dipsra animação de morte 
         if (HP > 0)
         {
             anima.SetTrigger("Hit");
@@ -127,7 +128,7 @@ public class player : MonoBehaviour
 
     #endregion
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmosSelected() // mostrando  o hitbox na scene da unity 
     {
         if(hitBox != null)
         {
