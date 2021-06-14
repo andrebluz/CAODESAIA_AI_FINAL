@@ -1,4 +1,4 @@
-Os assets na pasta VOXEL foram produzidos por mim André B. Luz e reservo os direitos de uso.
+Os assets na pasta VOXEL foram produzidos por mim André B. Luz e reservo os direitos de uso, assim como o asset na pasta PLAYER foi desenvolvido por Matheus D. Bregantin unicamente para nosso trabalho de curso Jogos Digitais grupo: CAO DE SAIA.
 Foram disponibilizados por mim via Github apenas para entrega de trabalho de faculdade e sua cópia é permitida somente para estudo sendo vedada sua distribuição por outros meios ou links.
 
 Obrigado pelo interesse.
@@ -8,7 +8,7 @@ Tenha um excelente e divertido dia! ;D
 
 ________________________TRANSLATED________________________
 
-The assets in the VOXEL folder were produced by me André B. Luz and I reserve the rights to use them.
+The assets in the VOXEL folder were produced by me André B. Luz and I reserve the rights to use them, as well as the asset in the PLAYER folder was developed by Matheus D. Bregantin solely for our course work Digital Games group: CAO DE SAIA.
 They were made available by me via Github only for delivery of college work and its copy is only allowed for study and its distribution by other means or links is prohibited.
 
 Thanks for your interest.
