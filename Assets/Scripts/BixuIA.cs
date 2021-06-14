@@ -29,7 +29,7 @@ public class BixuIA : MonoBehaviour
     private NavMeshAgent agent;
     private int idWaypoint;
     private Vector3 destination; 
-    // objetos que ira aparecer de menssagens no estados
+    // objetos que iram aparecer de mensagens nos estados
     public GameObject alert;
     public GameObject attack;
     public GameObject deadsymbol;
@@ -39,7 +39,7 @@ public class BixuIA : MonoBehaviour
         _GM = FindObjectOfType(typeof(GameManager)) as GameManager;//pegando script do game manager, para usar seus metodos e variaveis 
 
         anima = GetComponent<Animator>();// pegando  o animator
-        agent = GetComponent<NavMeshAgent>();// pegando navemeshe
+        agent = GetComponent<NavMeshAgent>();// pegando navmesh
 
         changeState(state);
     }
@@ -57,7 +57,7 @@ public class BixuIA : MonoBehaviour
         {
             alert.SetActive(false);
         }
-        // para que npc ataque e dispare a animação
+        //dispara animação de ataque
         if (isAttack || state == enemyState.FOLLOW || state == enemyState.FURY)
         {
             attack.SetActive(true);
@@ -66,7 +66,7 @@ public class BixuIA : MonoBehaviour
         {
             attack.SetActive(false);
         }
-        // para disparas a animaçãode se o npc de locomover
+        //dispara animação walk
         if (agent.desiredVelocity.magnitude >= 0.1f)
         {
             isWalk = true;
@@ -75,7 +75,7 @@ public class BixuIA : MonoBehaviour
         {
             isWalk = false;
         }
-        anima.SetBool("isWalk", isWalk);// dispara a animação de anadar 
+        anima.SetBool("isWalk", isWalk);// dispara a animação de walk 
         anima.SetBool("isAlert", isAlert);
          // se o hp estiver em 0 e a morte for verdadeira dispara as  animações e aparece a sprite de dead 
         if (HP <= 0 && !die_confirm)
@@ -86,7 +86,7 @@ public class BixuIA : MonoBehaviour
             deadsymbol.SetActive(true);
         }
     }
-    // dispara depois de um tempo se o player for morto 
+    //rotina de morte do IA
     IEnumerator enemyDisapear()
     {
         isDie = true;
@@ -99,7 +99,7 @@ public class BixuIA : MonoBehaviour
         if(other.gameObject.tag == "Player") //se player entrou no campo de visao
         {
             isPlayerVisible = true;
-            if (state == enemyState.IDLE || state == enemyState.PATROL) //e se o state é IDLE ou PATROL fica em alerta
+            if (state == enemyState.IDLE || state == enemyState.PATROL) // se o state é IDLE ou PATROL fica em alerta
             {
                 changeState(enemyState.ALERT);
             }
@@ -118,19 +118,19 @@ public class BixuIA : MonoBehaviour
     // metodo que dispara um hit
     void GetHit(int amount)
     {
-        if (isDie)// morreu retona verdadeiro
+        if (isDie)// morreu retorna verdadeiro
         {
             return;
         }
 
-        HP -= amount; // vida mesnos valor
+        HP -= amount; // vida menos valor da variavel amount
         if(HP > 0) // se a vida for maior que 0 
         {
             changeState(enemyState.FURY);// fica no estado de furia 
             anima.SetTrigger("GetHit");// dispara animação de hit 
             fxBlood.Emit(25);//dispara o efeito de sangue 
         }
-        else //se for hp 0
+        else //se for hp 0 || <
         {
             anima.SetTrigger("Die");// dispara animacão de morte
             StartCoroutine("enemyDisapear");
@@ -161,7 +161,7 @@ public class BixuIA : MonoBehaviour
                     destination = _GM.player.position; //passando a posição do player
                     agent.destination = destination; // passando a posição x pro agente de destino  do navemesh
 
-                    if (agent.remainingDistance <= agent.stoppingDistance) // para  se a distacia  for menor que x distacia
+                    if (agent.remainingDistance <= agent.stoppingDistance) // para  se a distancia  for menor que x distacia
                     {
                         Attack();
                     }
@@ -173,15 +173,15 @@ public class BixuIA : MonoBehaviour
 
 
                     destination = _GM.player.position;//passando a posição do player
-                    agent.destination = destination;// passando a posição x pro agente de destino  do navemesh
+                    agent.destination = destination;// passando a posição x pro agente de destino  do navmesh
 
-                    if (agent.remainingDistance <= agent.stoppingDistance)// para  se a distacia  for menor que x distacia
+                    if (agent.remainingDistance <= agent.stoppingDistance)// Attack() se proximo suficiente do alvo
                     {
                         Attack();
                     }
 
                     break;
-                case enemyState.PATROL:// estado de patrulia
+                case enemyState.PATROL:// estado de patrulha
 
                     break;
             }
@@ -190,13 +190,13 @@ public class BixuIA : MonoBehaviour
 
     void changeState(enemyState newState)
     {
-        StopAllCoroutines(); // parando todas coroutines
+        StopAllCoroutines(); // parando todas as rotinas paralelas
         
-        isAlert = false; //aleta falso
+        isAlert = false; //alerta falso
 
         switch (newState)
         {
-               // estado parado, pega o destino e se move com navemesh, dispara corountine
+               // estado parado, pega o destino e se move com navmesh, dispara coroutine
             case enemyState.IDLE:
                 agent.stoppingDistance = 0; //para objetos como player nao interferirem na chegada ao destino da patrulha
                 destination = transform.position; 
