@@ -1,5 +1,5 @@
 # CAODESAIA_AI_FINAL
-![alt text](https://github.com/andrebluz/CAODESAIA_AI_FINAL/blob/main/imgs/cover_.JPG?raw=true?raw=true)
+![alt text](https://github.com/andrebluz/CAODESAIA_AI_FINAL/blob/main/imgs/cover_.jpg?raw=true?raw=true)
 Enemy state machine script: https://github.com/andrebluz/CAODESAIA_AI_FINAL/blob/main/Assets/Scripts/BixuIA.cs
 ![alt text](https://github.com/andrebluz/CAODESAIA_AI_FINAL/blob/main/imgs/1.PNG?raw=true?raw=true)
 ![alt text](https://github.com/andrebluz/CAODESAIA_AI_FINAL/blob/main/imgs/2.PNG?raw=true?raw=true)
