@@ -211,7 +211,7 @@ public class BixuIA : MonoBehaviour
                 isAlert = true;
                 StartCoroutine("ALERT");
                 break;
-                // estado patrol, pega o destino e se move com navemesh entre pontos definidos, dispara corountine
+                // estado patrol, pega o destino e se move com navmesh entre pontos definidos, dispara corountine
             case enemyState.PATROL:
                 agent.stoppingDistance = 0; //para objetos como player nao interferirem na chegada ao destino da patrulha
                 idWaypoint = Random.Range(0, _GM.slimeWayPoints.Length);
@@ -221,7 +221,7 @@ public class BixuIA : MonoBehaviour
                 StartCoroutine("PATROL");
                 
                 break;
-                // estado Fallow, pega o destino e se move com navemesh,mas para em uma distacia pre determinada para dispara o ataque  ,dispara corountine
+                // estado Follow, pega o destino e se move com navmesh, mas para em uma distacia pre determinada para dispara o ataque, dispara corountine
             case enemyState.FOLLOW:
 
                 destination = transform.position;
@@ -230,7 +230,7 @@ public class BixuIA : MonoBehaviour
                 StartCoroutine("FOLLOW");
 
                 break;
-                 // estado Fury, pega o destino e se move com navemesh,mas para em uma distacia pre determinada para dispara o ataque
+                 // estado Fury, pega o destino e se move com navmesh,mas para em uma distacia pre determinada para dispara o ataque
             case enemyState.FURY:
                 destination = transform.position;
                 agent.stoppingDistance = _GM.slimeDistanceToAttack;
@@ -240,19 +240,19 @@ public class BixuIA : MonoBehaviour
         }
         state = newState;
     }
-// tempo de idle quanto ele fica parado
+// rotina do IDLE
     IEnumerator IDLE()
     {
         yield return new WaitForSeconds(_GM.slimeIdleWaitTime);
         stayStill(50);
     }
-// tempo da patrulha quando chega no destino ou perto dele
+// rotina do PATROL
     IEnumerator PATROL()
     {
         yield return new WaitUntil(() => agent.remainingDistance <= 0); //operador lambda ativa quando distancia remanescente do agent for menor ou igual a 0
         stayStill(30);
     }
-// tempo para que se não ver o player pare de persegir 
+// rotina do FOLLOW e troca de rotina dentro do estado 
     IEnumerator FOLLOW()
     {
         yield return new WaitUntil(() => !isPlayerVisible);
@@ -283,7 +283,7 @@ public class BixuIA : MonoBehaviour
             stayStill(10);
         }
     }
-// para ter um tempo de ataque pra ataque 
+// delay do ataque 
     IEnumerator ATTACK()
     {
         yield return new WaitForSeconds(_GM.slimeAttackDelay);
@@ -307,7 +307,7 @@ public class BixuIA : MonoBehaviour
         int randomic = Random.Range(0, 100);
         return randomic;
     }
-// metodo de atack
+// metodo de ataque
     void Attack()
     {
         if (!isAttack && isPlayerVisible == true) // se ataque for verdadeiro e se player estiver na visao  dispara ataque e a animação
@@ -319,7 +319,7 @@ public class BixuIA : MonoBehaviour
         StartCoroutine("ATTACK");
 
     }
-// metodo para que o npc olhe para o player e o persige
+// metodo para que o npc olhe para o player e ativa FOLLOW
     void LookAt()
     {
         Vector3 lookDir = (_GM.player.position - transform.position).normalized;
