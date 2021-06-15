@@ -29,7 +29,7 @@ public class BixuIA : MonoBehaviour
     private NavMeshAgent agent;
     private int idWaypoint;
     private Vector3 destination; 
-    // objetos que iram aparecer de mensagens nos estados
+    // objetos que aparecerão como signs in-game sobre os estados
     public GameObject alert;
     public GameObject attack;
     public GameObject deadsymbol;
