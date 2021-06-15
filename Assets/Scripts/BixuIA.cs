@@ -15,7 +15,7 @@ public class BixuIA : MonoBehaviour
     public int HP;
     // condição de morte
     private bool isDie;
-    //confirmação de morte para funções secubndárias
+    //confirmação de morte para funções secundárias
     private bool die_confirm = false;
 
 
